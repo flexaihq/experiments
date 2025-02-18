@@ -66,6 +66,8 @@ from transformers.utils import send_example_telemetry
 
 logger = logging.getLogger(__name__)
 
+TMP_INTER_CACHE_DIR = ".tmp.cache"
+
 
 def main():
     # See all possible arguments in src/transformers/training_args.py
@@ -731,11 +733,16 @@ def main():
         def add_target_lengths(target_length, prompt, description):
             return {"target_length": target_length + len(prompt) + len(description)}
 
+        cache_file_names = {
+            dataset_name: f"{TMP_INTER_CACHE_DIR}/{dataset_name}"
+            for dataset_name in vectorized_datasets.keys()
+        }
         with accelerator.local_main_process_first():
             vectorized_datasets = vectorized_datasets.map(
                 add_target_lengths,
                 num_proc=num_workers,
                 input_columns=["target_length", "prompt_input_ids", "input_ids"],
+                cache_file_names=cache_file_names,
             )
 
     # for large datasets it is advised to run the preprocessing on a
