@@ -22,6 +22,7 @@ The following table lists out the experiments available in this repository. Each
 | 6   | [Fine-Tuning a Language Model with QLoRA](/experiments/qlora-ft-on-a-language-model/README.md)                                | Fine-tune a causal language model efficiently using QLoRA                           |
 | 7   | [Fine-Tuning a Diffusion Model with LoRA](/experiments/lora-ft-on-a-diffusion-model/README.md)                                | Fine-tune a diffusion model efficiently using LoRA                                  |
 | 8   | [Fine-Tuning a Text-to-Speech Model](/experiments/ft-on-a-tts-model/README.md)                                                | Fine-tune a  text-to-speech (TTS) model                                             |
+| 9   | [Fine-Tuning a language Model using _Flash Attention_](/experiments/flash-attention-ft-on-a-language-model/README.md)            | Fine-tune a causal language model efficiently using the [flash-attn package](https://github.com/Dao-AILab/flash-attention)                                             |
 
 ---
 

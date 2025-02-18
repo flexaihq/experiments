@@ -49,6 +49,15 @@ class ModelArguments:
             "choices": ["auto", "bfloat16", "float16", "float32"],
         },
     )
+    attn_implementation: Optional[str] = field(
+        default=None,
+        metadata={
+            "help": (
+                "The attention implementation to use in the model (if relevant). "
+                "E.g. `flash_attention_2`."
+            )
+        },
+    )
 
 
 @dataclass
@@ -96,10 +105,14 @@ def _load_model_and_tokenizer(model_args, print_model=False):
         if model_args.torch_dtype in ["auto", None]
         else getattr(torch, model_args.torch_dtype)
     )
+    extra_model_args = {}
+    if model_args.attn_implementation is not None:
+        extra_model_args["attn_implementation"] = model_args.attn_implementation
     model = AutoModelForCausalLM.from_pretrained(
         model_args.model_name_or_path,
         config=config,
         torch_dtype=torch_dtype,
+        **extra_model_args,
     )
     if print_model:
         print(model)
