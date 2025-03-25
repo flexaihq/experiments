@@ -965,7 +965,8 @@ def main(args):
     # We need to initialize the trackers we use, and also store our configuration.
     # The trackers initializes automatically on the main process.
     if accelerator.is_main_process:
-        accelerator.init_trackers("text2image-fine-tune", config=vars(args))
+        project_name = os.getenv("WANDB_PROJECT", "text2image-fine-tune")
+        accelerator.init_trackers(project_name, config=vars(args))
 
     # Train!
     total_batch_size = (
