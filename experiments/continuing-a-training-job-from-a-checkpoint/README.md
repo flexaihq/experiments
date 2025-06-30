@@ -8,7 +8,7 @@ Extract the contents of the `output_0.zip` file into a directory named `fetched_
 unzip output_0.zip -d fetched_checkpoints
 ```
 
-This `fetched_checkpoints` directory contains the different checkpoints that have been saved in the `/output` of the Training Job's runtime environment during execution.
+This `fetched_checkpoints` directory contains the different checkpoints that have been saved in the `/output-checkpoint` of the Training Job's runtime environment during execution.
 
 Let's use the checkpoint (saved at step 500) located in `fetched_checkpoints/output/checkpoint-500/`.
 
@@ -21,15 +21,15 @@ flexai checkpoint push gpt2-ckpt500 --file fetched_checkpoints/output/checkpoint
 Resume training from your checkpoint with the following command:
 
 ```bash
-flexai training run gpt2training-resume --source-name fcs-experiments --dataset gpt2-tokenized-wikitext --checkpoint gpt2-ckpt500 \
+flexai training run gpt2training-resume --repository-url https://github.com/flexaihq/fcs-experiments --dataset gpt2-tokenized-wikitext --checkpoint gpt2-ckpt500 \
   -- code/causal-language-modeling/train.py \
     --do_eval \
     --do_train \
     --dataset_name wikitext \
-    --tokenized_dataset_load_dir /input \
-    --model_name_or_path /checkpoint \
-    --resume_from_checkpoint /checkpoint \
-    --output_dir /output \
+    --tokenized_dataset_load_dir /input/gpt2-tokenized-wikitext \
+    --model_name_or_path /input-checkpoint \
+    --resume_from_checkpoint /input-checkpoint \
+    --output_dir /output-checkpoint \
     --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 8 \
     --logging_steps 50 \
@@ -41,10 +41,10 @@ flexai training run gpt2training-resume --source-name fcs-experiments --dataset 
 
 Compared to the experiment that starts training from the base model, note that:
 
-- `--checkpoint gpt2-ckpt500` has been added - referring to the checkpoint created above, the content of the `checkpoint-500` folder will be mounted on `/checkpoint`
+- `--checkpoint gpt2-ckpt500` has been added - referring to the checkpoint created above, the content of the `checkpoint-500` folder will be mounted on `/input-checkpoint`
 - `--model_name_or_path` has been updated - pointing to the new checkpoint location
 
 together with additional HuggingFace args to resume the training from the checkpoint:
 
-- `--resume_from_checkpoint /checkpoint`
+- `--resume_from_checkpoint /input-checkpoint`
 - `--num_train_epochs 6`

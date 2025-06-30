@@ -1,6 +1,6 @@
 {
     "model_name_or_path": "parler-tts/parler_tts_mini_v0.1",
-    "save_to_disk": "/input/",
+    "save_to_disk": "/input/text-to-speech-fr",
     "temporary_save_to_disk": "./audio_code_tmp/",
     "wandb_project": "parler-francais",
     "feature_extractor_name": "ylacombe/dac_44khZ_8kbps",
@@ -10,7 +10,7 @@
         "wandb"
     ],
     "overwrite_output_dir": true,
-    "output_dir": "/output",
+    "output_dir": "/output-checkpoint",
     "train_dataset_name": "PHBJT/cml-tts-20percent-subset",
     "train_metadata_dataset_name": "PHBJT/cml-tts-20percent-subset-description",
     "train_dataset_config_name": "default",

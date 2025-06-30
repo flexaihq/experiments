@@ -12,4 +12,4 @@ trl==0.11.4
 evaluate>=0.4.3
 scikit_learn>=1.5.2
 wandb>=0.18.1
-flash-attn==2.7.4.post1
+# flash-attn==2.7.4.post1 disable for now.

@@ -6,15 +6,15 @@ The model generates high-quality speech from input text, which can be controlled
 
 The training uses the a `text-to-speech` dataset in French, enabling the model to produce natural and expressive speech in this language.
 
-## Step 1: Adding this repository as a Source
+## Step 1: Connect to GitHub (if needed)
 
-If you haven't already, you will need to add this repository as a [Source](https://docs.flex.ai/quickstart/adding-sources) to your FlexAI account.
-
-This repository contains the list of required dependencies (in the `requirements.txt` file) and the code that will handle the training process. To add a Source, run the following command:
+If you haven't already connected FlexAI to GitHub, you'll need to set up a code registry connection:
 
 ```bash
-flexai source add fcs-experiments https://github.com/flexaihq/fcs-experiments.git
+flexai code-registry connect
 ```
+
+This will allow FlexAI to pull repositories directly from GitHub using the `-u` flag in training commands.
 
 ## Step 2: Getting the Dataset
 
@@ -37,7 +37,7 @@ flexai dataset push text-to-speech-fr --file text-to-speech-fr
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run text-to-speech-ddp --source-name fcs-experiments --dataset text-to-speech-fr --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> \
+flexai training run text-to-speech-ddp --repository-url https://github.com/flexaihq/fcs-experiments --dataset text-to-speech-fr --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> \
   --nodes 1 --accels 8 \
   -- code/text-to-speech/run_parler_tts_training.py ./code/text-to-speech/french_training.json
 ```
@@ -45,11 +45,11 @@ flexai training run text-to-speech-ddp --source-name fcs-experiments --dataset t
 Instead of passing a `.json` file as input, you can also set the arguments manually. For example:
 
 ```bash
-flexai training run text-to-speech-ddp --source-name fcs-experiments --dataset text-to-speech-fr --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> \
+flexai training run text-to-speech-ddp --repository-url https://github.com/flexaihq/fcs-experiments --dataset text-to-speech-fr --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> \
   --nodes 1 --accels 8 \
   -- code/text-to-speech/run_parler_tts_training.py \
     --model_name_or_path=parler-tts/parler_tts_mini_v0.1 \
-    --save_to_disk=/input \
+    --save_to_disk=/input/text-to-speech-fr \
     --temporary_save_to_disk=./audio_code_tmp/ \
     --wandb_project=parler-francais \
     --feature_extractor_name=ylacombe/dac_44khZ_8kbps \
@@ -57,7 +57,7 @@ flexai training run text-to-speech-ddp --source-name fcs-experiments --dataset t
     --prompt_tokenizer_name=google/flan-t5-large \
     --report_to=wandb \
     --overwrite_output_dir \
-    --output_dir=/output \
+    --output_dir=/output-checkpoint \
     --train_dataset_name=PHBJT/cml-tts-20percent-subset \
     --train_metadata_dataset_name=PHBJT/cml-tts-20percent-subset-description \
     --train_dataset_config_name=default \

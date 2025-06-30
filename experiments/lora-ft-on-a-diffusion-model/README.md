@@ -5,6 +5,8 @@ In this experiment, we will fine-tune Stable Diffusion XL on the with LoRA using
 The goal is to specialize the model for generating content related to Naruto.
 Fine-tuning enables the model to better produce outputs tailored to the themes and characteristics of the dataset, which may include unique styles, characters, or captions associated with the Naruto universe.
 
+> **Note**: If you haven't already connected FlexAI to GitHub, you'll need to run `flexai code-registry connect` to set up a code registry connection. This allows FlexAI to pull repositories directly using the `-u` flag in training commands.
+
 ## Prepare the Dataset
 
 We will be using the `lambdalabs/naruto-blip-captions` dataset. You can download the pre-processed version of the dataset by running the following command:
@@ -26,12 +28,12 @@ flexai dataset push sdxl-tokenized-naruto --file sdxl-tokenized-naruto
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run text-to-image-lora-SDXL-training-ddp --source-name fcs-experiments --dataset sdxl-tokenized-naruto --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> \
+flexai training run text-to-image-lora-SDXL-training-ddp --repository-url https://github.com/flexaihq/fcs-experiments --dataset sdxl-tokenized-naruto --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> \
   --nodes 1 --accels 2 \
   -- code/diffuser/train_text_to_image_lora_sdxl.py \
     --pretrained_model_name_or_path stabilityai/stable-diffusion-xl-base-1.0 \
     --pretrained_vae_model_name_or_path madebyollin/sdxl-vae-fp16-fix \
-    --train_dataset_load_dir /input \
+    --train_dataset_load_dir /input/sdxl-tokenized-naruto \
     --caption_column text \
     --resolution 1024 \
     --random_flip \
@@ -43,7 +45,7 @@ flexai training run text-to-image-lora-SDXL-training-ddp --source-name fcs-exper
     --lr_warmup_steps 0 \
     --mixed_precision fp16 \
     --seed 42 \
-    --output_dir /output \
+    --output_dir /output-checkpoint \
     --validation_prompt "'cute dragon creature'"
 ```
 

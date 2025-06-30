@@ -4,15 +4,15 @@ In some cases you might want to use large datasets that would be too large to do
 
 This experiment demonstrates how to stream a large dataset during a Training Job on FCS. We'll use the [HuggingFace Datasets library](https://huggingface.co/docs/datasets/en/stream)'s Streaming capabilities to achieve this.
 
-## Step 1: Adding this repository as a Source
+## Step 1: Connect to GitHub (if needed)
 
-If you haven't already, you will need to add this repository as a [Source](https://docs.flex.ai/quickstart/adding-sources) to your FlexAI account.
-
-This repository contains the list of required dependencies (in the `requirements.txt` file) and the code that will handle the training process. To add a Source, run the following command:
+If you haven't already connected FlexAI to GitHub, you'll need to set up a code registry connection:
 
 ```bash
-flexai source add fcs-experiments https://github.com/flexaihq/fcs-experiments.git
+flexai code-registry connect
 ```
+
+This will allow FlexAI to pull repositories directly from GitHub using the `-u` flag in training commands.
 
 ## Step 2: Preparing the Dataset
 
@@ -28,7 +28,7 @@ flexai source add fcs-experiments https://github.com/flexaihq/fcs-experiments.gi
 Here is an example using the `code/causal-language-modeling/train.py` script to stream the over 90 TB [Fineweb dataset](https://huggingface.co/datasets/HuggingFaceFW/fineweb):
 
 ```bash
-flexai training run gpt2training-stream --source-name fcs-experiments --dataset empty-dataset \
+flexai training run gpt2training-stream --repository-url https://github.com/flexaihq/fcs-experiments --dataset empty-dataset \
    -- code/causal-language-modeling/train.py \
     --dataset_streaming true \
     --do_train \
@@ -39,7 +39,7 @@ flexai training run gpt2training-stream --source-name fcs-experiments --dataset 
     --dataloader_num_workers 8 \
     --max_steps 2500 \
     --model_name_or_path openai-community/gpt2 \
-    --output_dir /output \
+    --output_dir /output-checkpoint \
     --per_device_train_batch_size 8 \
     --logging_steps 50 \
     --save_steps 1000

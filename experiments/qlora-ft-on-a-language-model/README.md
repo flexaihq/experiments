@@ -4,15 +4,15 @@ In this experiment, we will fine-tune a causal language model using QLoRA and th
 
 We will use `Llama3.1` as our large language model (LLM) and train it on the `openassistant-guanaco` dataset but you can easily choose another model or dataset from the HuggingFace hub.
 
-## Step 1: Adding this repository as a Source
+## Step 1: Connect to GitHub (if needed)
 
-If you haven't already, you will need to add this repository as a [Source](https://docs.flex.ai/quickstart/adding-sources) to your FlexAI account.
-
-This repository contains the list of required dependencies (in the `requirements.txt` file) and the code that will handle the training process. To add a Source, run the following command:
+If you haven't already connected FlexAI to GitHub, you'll need to set up a code registry connection:
 
 ```bash
-flexai source add fcs-experiments https://github.com/flexaihq/fcs-experiments.git
+flexai code-registry connect
 ```
+
+This will allow FlexAI to pull repositories directly from GitHub using the `-u` flag in training commands.
 
 ## Step 2: Preparing the Dataset
 
@@ -49,18 +49,18 @@ Then paste your _HuggingFace Token_ API key value.
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run llama3-1-training-ddp --source-name fcs-experiments --dataset llama-tokenized-oag --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> --env WANDB_PROJECT=<YOUR_PROJECT_NAME> \
+flexai training run llama3-1-training-ddp --repository-url https://github.com/flexaihq/fcs-experiments --dataset llama-tokenized-oag --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> --env WANDB_PROJECT=<YOUR_PROJECT_NAME> \
   --nodes 1 --accels 2 \
   -- code/causal-language-modeling-qlora/train.py \
     --model_name_or_path meta-llama/Meta-Llama-3.1-8B \
     --dataset_name timdettmers/openassistant-guanaco \
-    --tokenized_dataset_load_dir /input \
+    --tokenized_dataset_load_dir /input/llama-tokenized-oag \
     --dataset_text_field text \
     --load_in_4bit \
     --use_peft \
     --per_device_train_batch_size 4 \
     --gradient_accumulation_steps 2 \
-    --output_dir /output \
+    --output_dir /output-checkpoint \
     --log_level info
 ```
 

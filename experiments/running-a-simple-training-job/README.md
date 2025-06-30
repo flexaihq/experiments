@@ -4,17 +4,9 @@ This experiment demonstrates how easy it is to leverage **FlexAI Cloud Services*
 
 You will see that this straightforward process only requires two components: a training script and a dataset. The training script is responsible for defining the model, setting up and applying hyperparameters, running the training loop, and applying its respective evaluation logic, while the dataset contains the information that will be used to train the model.
 
-## Step 1: Adding this repository as a Source
+> **Note**: If you haven't already connected FlexAI to GitHub, you'll need to run `flexai code-registry connect` to set up a code registry connection. This allows FlexAI to pull repositories directly using the `-u` flag in training commands.
 
-If you haven't already, you will need to add this repository as a [Source](https://docs.flex.ai/quickstart/adding-sources) to your FlexAI account.
-
-This repository contains the list of required dependencies (in the `requirements.txt` file) and the code that will handle the training process. To add a Source, run the following command:
-
-```bash
-flexai source add fcs-experiments https://github.com/flexaihq/fcs-experiments.git
-```
-
-## Step 2: Preparing the Dataset
+## Step 1: Preparing the Dataset
 
 In this experiment, we will use a pre-processed version of the the `wikitext` dataset that has been set up for the `GPT-2` model.
 
@@ -32,21 +24,21 @@ In this experiment, we will use a pre-processed version of the the `wikitext` da
     flexai dataset push gpt2-tokenized-wikitext --file gpt2-tokenized-wikitext
     ```
 
-## Step 3: Train the Model
+## Step 2: Train the Model
 
 Now, it's time to train your LLM on the dataset you just _pushed_ in the previous step, `gpt2-tokenized-wikitext`. This experiment uses the `GPT-2` model, however, the training script script we will use ([`code/causal-language-modeling/train.py`](../../code/causal-language-modeling/train.py)) leverages the [HuggingFace Transformers `Trainer` class](https://huggingface.co/docs/transformers/en/trainer), which makes it easy to replace `GPT-2` with another model from the [HuggingFace Model Hub](https://huggingface.co/models).
 
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run fcs-experiments-simple --source-name fcs-experiments --dataset gpt2-tokenized-wikitext \
+flexai training run fcs-experiments-simple --repository-url https://github.com/flexaihq/fcs-experiments --dataset gpt2-tokenized-wikitext \
  -- code/causal-language-modeling/train.py \
     --do_eval \
     --do_train \
     --dataset_name wikitext \
-    --tokenized_dataset_load_dir /input \
+    --tokenized_dataset_load_dir /input/gpt2-tokenized-wikitext \
     --model_name_or_path openai-community/gpt2 \
-    --output_dir /output \
+    --output_dir /output-checkpoint \
     --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 8 \
     --logging_steps 50 \
@@ -65,7 +57,7 @@ The second line defines the script that will be executed when the Training Job i
 
 After the second line come the script's arguments, which are passed to the script when it is executed to adjust the Training Job hyperparameters or customize its behavior. For instance, `--max_train_samples` and `--max_eval_samples` can be used to tweak the sample size.
 
-## Step 4: Checking up on the Training Job
+## Step 3: Checking up on the Training Job
 
 You can check the status and life cycle events of your Training Job by running:
 
@@ -79,15 +71,19 @@ Additionally, you can view the logs of your Training Job by running:
 flexai training logs fcs-experiments-simple
 ```
 
-## Step 5: Fetching the Trained Model artifacts
+## Step 4: Fetching the Trained Model artifacts
 
-Once the Training Job completes successfully, you will be able to download its output artifacts by running:
+Once the Training Job completes successfully, you will be able to list all the produced checkpoints:
 
 ```bash
-flexai training fetch fcs-experiments-simple
+flexai training checkpoints fcs-experiments-simple
 ```
 
-This will download a `zip` file containing the trained model artifacts to your current working directory.
+They can be downloaded with:
+
+```bash
+flexai checkpoint fetch "<CPKT-ID>"
+```
 
 You now have a trained model that you can use for inference or further fine-tuning! Check out the [Extra](#optional-extra-steps) section below for more information on how to run your fine-tuned model locally, or even better, how to run the training script directly on FCS using an Interactive Training Session. You can also learn how to manually pre-process the dataset if you're interested in understanding the process better.
 
@@ -97,7 +93,7 @@ You can also have a look at other FCS experiments within this repository to expl
 
 ### Try your fine-tuned model locally
 
-You can run your newly fine-tuned model in an [FCS Interactive Session](#run-the-training-script-directly-on-fcs-using-an-interactive-training-session) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
+You can run your newly fine-tuned model in an [FCS Interactive Session](#run-the-training-script-directly-on-fcs-using-an-interactive-training-session) or in a local env (e.g. `pipenv install --python 3.11`), if you have hardware that's capable of doing inference.
 
 #### 1. Clone this repository
 
@@ -117,15 +113,27 @@ pip install -r requirements.txt
 
 #### 3. Extract the model artifacts
 
-_Unzip_ the `output_0.zip` file you downloaded [earlier](#step-5-fetching-the-trained-model-artifacts) when running the `flexai training fetch fcs-experiments-simple` command. This will create a directory named `output` and make note of its location, you will use it next.
+First, list the available checkpoints from your training job:
+
+```bash
+flexai training checkpoints fcs-experiments-simple
+```
+
+Then fetch the specific checkpoint you want to use (replace `<CHECKPOINT-ID>` with the actual checkpoint ID from the list):
+
+```bash
+flexai checkpoint fetch "<CHECKPOINT-ID>" --destination ./checkpoint
+```
+
+This will download the checkpoint to a local `checkpoint` directory. Make note of this location, as you will use it next.
 
 #### 4. Run the inference script
 
-Run the script made for inference on this model by running the command below, replacing `**PATH_TO_THE_UNZIPPED_OUTPUT_DIRECTORY**` with the path to the directory `output` directory:
+Run the script made for inference on this model by running the command below, replacing `**PATH_TO_THE_CHECKPOINT_DIRECTORY**` with the path to the checkpoint directory you downloaded:
 
 ```bash
 python code/causal-language-modeling/predict.py \
-    --model_name_or_path **PATH_TO_THE_UNZIPPED_OUTPUT_DIRECTORY** \
+    --model_name_or_path **PATH_TO_THE_CHECKPOINT_DIRECTORY** \
     --input_str "Once upon a time, " \
     --max_new_tokens 30
 ```
@@ -141,7 +149,7 @@ You will find the guide on how to run an Interactive Training Session in the [Fl
 To prepare and save the `wikitext` dataset for the `GPT-2` model run the following command:
 
 ```bash
-python dataset/prepare_save_dataset.py \
+python code/dataset/prepare_save_dataset.py \
     --dataset_name wikitext \
     --tokenized_dataset_save_dir gpt2-tokenized-wikitext \
     --dataset_config_name wikitext-2-raw-v1 \

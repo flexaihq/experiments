@@ -44,15 +44,15 @@ For more ways to customize and configure your _wandb_ environment, check out the
 
 ## Setting Up the Experiment
 
-### Step 1: Adding this repository as a Source
+### Step 1: Connect to GitHub (if needed)
 
-If you haven't already, you will need to add this repository as a [Source](https://docs.flex.ai/quickstart/adding-sources) to your FlexAI account.
-
-This repository contains the list of required dependencies (in the `requirements.txt` file) and the code that will handle the training process. To add a Source, run the following command:
+If you haven't already connected FlexAI to GitHub, you'll need to set up a code registry connection:
 
 ```bash
-flexai source add fcs-experiments https://github.com/flexaihq/fcs-experiments.git
+flexai code-registry connect
 ```
+
+This will allow FlexAI to pull repositories directly from GitHub using the `-u` flag in training commands.
 
 ### Step 2: Preparing the Dataset
 
@@ -75,14 +75,14 @@ In this experiment, we will use a pre-processed version of the the `wikitext` da
 Now that all the pieces are in place (_wandb_ Secret, Source, and Dataset), you can run the training job with experiment tracking enabled.
 
 ```bash
-flexai training run gpt2training-tracker --source-name fcs-experiments --dataset gpt2-tokenized-wikitext --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> --env WANDB_PROJECT=<YOUR_PROJECT_NAME> \
+flexai training run gpt2training-tracker --repository-url https://github.com/flexaihq/fcs-experiments --dataset gpt2-tokenized-wikitext --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> --env WANDB_PROJECT=<YOUR_PROJECT_NAME> \
   -- code/causal-language-modeling/train.py \
     --do_eval \
     --do_train \
     --dataset_name wikitext \
-    --tokenized_dataset_load_dir /input \
+    --tokenized_dataset_load_dir /input/gpt2-tokenized-wikitext \
     --model_name_or_path openai-community/gpt2 \
-    --output_dir /output \
+    --output_dir /output-checkpoint \
     --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 8 \
     --logging_steps 50 \

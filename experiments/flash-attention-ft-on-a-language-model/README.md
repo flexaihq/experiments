@@ -1,18 +1,21 @@
 # Fine-Tuning a language Model with flash-attention
 
+> [!NOTE]
+> This experiment is temporarily disabled.
+
 This experiment demonstrates how easy it is to leverage **FlexAI Cloud Services** (FCS) to run a Training Job making use of _Flash Attention_ through the [flash-attention](https://github.com/Dao-AILab/flash-attention) package with a couple of commands. We will use an example of training a causal language model (LLM) on the `wikitext` dataset using the `GPT-2` model.
 
 You will see that this straightforward process only requires two components: a training script and a dataset. The training script is responsible for defining the model, setting up and applying hyperparameters, running the training loop, and applying its respective evaluation logic, while the dataset contains the information that will be used to train the model.
 
-## Step 1: Adding this repository as a Source
+## Step 1: Connect to GitHub (if needed)
 
-If you haven't already, you will need to add this repository as a [Source](https://docs.flex.ai/quickstart/adding-sources) to your FlexAI account.
-
-This repository contains the list of required dependencies (in the `requirements.txt` file) and the code that will handle the training process. To add a Source, run the following command:
+If you haven't already connected FlexAI to GitHub, you'll need to set up a code registry connection:
 
 ```bash
-flexai source add fcs-experiments https://github.com/flexaihq/fcs-experiments.git
+flexai code-registry connect
 ```
+
+This will allow FlexAI to pull repositories directly from GitHub using the `-u` flag in training commands.
 
 ## Step 2: Preparing the Dataset
 
@@ -39,14 +42,14 @@ Now, it's time to train your LLM on the dataset you just _pushed_ in the previou
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run fcs-experiments-flash-attention --source-name fcs-experiments --dataset gpt2-tokenized-wikitext \
+flexai training run fcs-experiments-flash-attention --repository-url https://github.com/flexaihq/fcs-experiments --dataset gpt2-tokenized-wikitext \
  -- code/causal-language-modeling/train.py \
     --do_eval \
     --do_train \
     --dataset_name wikitext \
-    --tokenized_dataset_load_dir /input \
+    --tokenized_dataset_load_dir /input/gpt2-tokenized-wikitext \
     --model_name_or_path openai-community/gpt2 \
-    --output_dir /output \
+    --output_dir /output-checkpoint \
     --per_device_train_batch_size 8 \
     --per_device_eval_batch_size 8 \
     --logging_steps 50 \
@@ -100,7 +103,7 @@ You can now have a look at other FCS experiments within this repository to explo
 To prepare and save the `wikitext` dataset for the `GPT-2` model run the following command:
 
 ```bash
-python dataset/prepare_save_dataset.py \
+python code/dataset/prepare_save_dataset.py \
     --dataset_name wikitext \
     --tokenized_dataset_save_dir gpt2-tokenized-wikitext \
     --dataset_config_name wikitext-2-raw-v1 \
