@@ -1,6 +1,6 @@
 # Running a simple Training Job on FCS
 
-This experiment demonstrates how easy it is to leverage **FlexAI Cloud Services** (FCS) to run a Training Job with a couple of commands. We will use a simple example of training a causal language model (LLM) on the `wikitext` dataset using the `GPT-2` model.
+This experiment demonstrates how easy it is to leverage **FlexAI** to run a Training Job with a couple of commands. We will use a simple example of training a causal language model (LLM) on the `wikitext` dataset using the `GPT-2` model.
 
 You will see that this straightforward process only requires two components: a training script and a dataset. The training script is responsible for defining the model, setting up and applying hyperparameters, running the training loop, and applying its respective evaluation logic, while the dataset contains the information that will be used to train the model.
 
@@ -142,7 +142,7 @@ python code/causal-language-modeling/predict.py \
 
 An Interactive Training Session allows you to connect to a Training Environment runtime on FCS and run your both training and prediction or inference scripts directly from this environment. This is a great way to test your scripts and experiment with different hyperparameters without having to create multiple Training Jobs per configuration change.
 
-You will find the guide on how to run an Interactive Training Session in the [FlexAI Cloud Services Documentation](https://docs.flex.ai/cli/guides/interactive-training/). You'll need to use the path for the `flexaihq/experiments` repository as your `--repository-url` and pass the `gpt2-tokenized-wikitext` dataset you pushed earlier as `--dataset`, unless you want to leverage the Interactive Training Session's compute resources to [manually pre-process the dataset](#manual-dataset-pre-processing).
+You will find the guide on how to run an Interactive Training Session in the [FlexAI Documentation](https://docs.flex.ai/cli/guides/interactive-training/). You'll need to use the path for the `flexaihq/experiments` repository as your `--repository-url` and pass the `gpt2-tokenized-wikitext` dataset you pushed earlier as `--dataset`, unless you want to leverage the Interactive Training Session's compute resources to [manually pre-process the dataset](#manual-dataset-pre-processing).
 
 ### Manual Dataset Pre-processing
 

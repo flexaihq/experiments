@@ -3,7 +3,7 @@
 > [!NOTE]
 > This experiment is temporarily disabled.
 
-This experiment demonstrates how easy it is to leverage **FlexAI Cloud Services** (FCS) to run a Training Job making use of _Flash Attention_ through the [flash-attention](https://github.com/Dao-AILab/flash-attention) package with a couple of commands. We will use an example of training a causal language model (LLM) on the `wikitext` dataset using the `GPT-2` model.
+This experiment demonstrates how easy it is to leverage **FlexAI** to run a Training Job making use of _Flash Attention_ through the [flash-attention](https://github.com/Dao-AILab/flash-attention) package with a couple of commands. We will use an example of training a causal language model (LLM) on the `wikitext` dataset using the `GPT-2` model.
 
 You will see that this straightforward process only requires two components: a training script and a dataset. The training script is responsible for defining the model, setting up and applying hyperparameters, running the training loop, and applying its respective evaluation logic, while the dataset contains the information that will be used to train the model.
 

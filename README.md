@@ -1,6 +1,6 @@
-# FlexAI Cloud Services - Experiments
+# FlexAI Experiments
 
-This repository provides **a set of different experiments** designed for you to try out and explore **FlexAI Cloud Services** (or **FCS**). These experiments range from running your very first training job, to fine-tuning language, diffusion, and text-to-speech models using techniques like QLoRA and LoRA, as well as integrating FCS with other platforms, such as experiment trackers.
+This repository provides **a set of different experiments** designed for you to try out and explore **FlexAI**. These experiments range from running your very first training job, to fine-tuning language, diffusion, and text-to-speech models using techniques like QLoRA and LoRA, as well as integrating FCS with other platforms, such as experiment trackers.
 
 ## Getting Started
 
