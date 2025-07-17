@@ -1,0 +1,6 @@
+accelerate==1.8.1
+datasets>=2.21.0
+evaluate>=0.4.3
+scikit_learn>=1.5.2
+transformers>=4.43.3
+wandb>=0.18.1

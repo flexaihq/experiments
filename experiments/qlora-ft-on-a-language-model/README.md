@@ -36,7 +36,7 @@ To access the Llama-3.1-8B model, you need to [accept the license](https://huggi
 
 To be authenticated within your code, you will use your _HuggingFace Token_.
 
-Use the [`flexai secret create` command](https://docs.flex.ai/commands/secret) to store your _HuggingFace Token_ as a secret. Replace `<HF_AUTH_TOKEN_SECRET_NAME>` with your desired name for the secret:
+Use the [`flexai secret create` command](https://docs.flex.ai/cli/commands/secret/) to store your _HuggingFace Token_ as a secret. Replace `<HF_AUTH_TOKEN_SECRET_NAME>` with your desired name for the secret:
 
 ```bash
 flexai secret create <HF_AUTH_TOKEN_SECRET_NAME>
@@ -49,7 +49,7 @@ Then paste your _HuggingFace Token_ API key value.
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run llama3-1-training-ddp --repository-url https://github.com/flexaihq/fcs-experiments --dataset llama-tokenized-oag --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> --env WANDB_PROJECT=<YOUR_PROJECT_NAME> \
+flexai training run llama3-1-training-ddp --repository-url https://github.com/flexaihq/experiments --dataset llama-tokenized-oag --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> --env WANDB_PROJECT=<YOUR_PROJECT_NAME> \
   --nodes 1 --accels 2 \
   -- code/causal-language-modeling-qlora/train.py \
     --model_name_or_path meta-llama/Meta-Llama-3.1-8B \
@@ -70,14 +70,14 @@ flexai training run llama3-1-training-ddp --repository-url https://github.com/fl
 
 If you'd prefer to perform the dataset pre-processing step yourself, you can follow these instructions.
 
-You can run these in an [FCS Interactive Session](https://docs.flex.ai/guides/interactive-training) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
+You can run these in an [FCS Interactive Session](https://docs.flex.ai/cli/guides/interactive-training/) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
 
 #### Clone this repository
 
 If you haven't already, clone this repository on your host machine:
 
 ```bash
-git clone https://github.com/flexaihq/fcs-experiments.git --depth 1 --branch main && cd fcs-experiments
+git clone https://github.com/flexaihq/experiments.git --depth 1 --branch main && cd fcs-experiments
 ```
 
 #### Install the dependencies

@@ -28,7 +28,7 @@ flexai dataset push sdxl-tokenized-naruto --file sdxl-tokenized-naruto
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run text-to-image-lora-SDXL-training-ddp --repository-url https://github.com/flexaihq/fcs-experiments --dataset sdxl-tokenized-naruto --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> \
+flexai training run text-to-image-lora-SDXL-training-ddp --repository-url https://github.com/flexaihq/experiments --dataset sdxl-tokenized-naruto --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> --secret WANDB_API_KEY=<WANDB_API_KEY_SECRET_NAME> --requirements-path code/diffuser/requirements.txt \
   --nodes 1 --accels 2 \
   -- code/diffuser/train_text_to_image_lora_sdxl.py \
     --pretrained_model_name_or_path stabilityai/stable-diffusion-xl-base-1.0 \
@@ -55,14 +55,14 @@ flexai training run text-to-image-lora-SDXL-training-ddp --repository-url https:
 
 If you'd prefer to perform the dataset pre-processing step yourself, you can follow these instructions.
 
-You can run these in an [FCS Interactive Session](https://docs.flex.ai/guides/interactive-training) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
+You can run these in an [FCS Interactive Session](https://docs.flex.ai/cli/guides/interactive-training/) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
 
 #### Clone this repository
 
 If you haven't already, clone this repository on your host machine:
 
 ```bash
-git clone https://github.com/flexaihq/fcs-experiments.git --depth 1 --branch main && cd fcs-experiments
+git clone https://github.com/flexaihq/experiments.git --depth 1 --branch main && cd fcs-experiments
 ```
 
 #### Install the dependencies
@@ -70,7 +70,7 @@ git clone https://github.com/flexaihq/fcs-experiments.git --depth 1 --branch mai
 Depending on your environment, you might need to install - if not already - the experiments' dependencies by running:
 
 ```bash
-pip install -r requirements.txt
+pip install -r code/diffuser/requirements.txt
 ```
 
 #### Dataset preparation

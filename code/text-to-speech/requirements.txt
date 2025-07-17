@@ -1,0 +1,6 @@
+accelerate==1.0.1
+datasets>=2.21.0
+evaluate>=0.4.3
+jiwer>=3.0.4
+parler-tts @ git+https://github.com/huggingface/parler-tts.git@5d0aca9753ab74ded179732f5bd797f7a8c6f8ee
+wandb>=0.18.1

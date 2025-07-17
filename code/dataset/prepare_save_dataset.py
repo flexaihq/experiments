@@ -1,3 +1,7 @@
+# Copyright (c) 2025 FlexAI
+# This file is part of the FlexAI Experiments repository.
+# SPDX-License-Identifier: MIT
+
 from dataclasses import dataclass, field
 from functools import partial
 from itertools import chain

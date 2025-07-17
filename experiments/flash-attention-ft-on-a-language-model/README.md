@@ -42,7 +42,7 @@ Now, it's time to train your LLM on the dataset you just _pushed_ in the previou
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run fcs-experiments-flash-attention --repository-url https://github.com/flexaihq/fcs-experiments --dataset gpt2-tokenized-wikitext \
+flexai training run fcs-experiments-flash-attention --repository-url https://github.com/flexaihq/experiments --dataset gpt2-tokenized-wikitext --requirements-path code/causal-language-modeling/requirements-flash-attn.txt \
  -- code/causal-language-modeling/train.py \
     --do_eval \
     --do_train \
@@ -63,7 +63,7 @@ flexai training run fcs-experiments-flash-attention --repository-url https://git
 The first line defines the 3 main components required to run a Training Job in FCS:
 
 1. The Training Job's name (`fcs-experiments-flash-attention`).
-1. The name of the Source that contains the training script (`fcs-experiments`).
+1. The URL of the repository containing the training script (`https://github.com/flexaihq/experiments`).
 1. The name of the dataset to be used (`gpt2-tokenized-wikitext`).
 
 The second line defines the script that will be executed when the Training Job is started (`code/causal-language-modeling/train.py`).

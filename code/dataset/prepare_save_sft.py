@@ -1,3 +1,7 @@
+# Copyright (c) 2025 FlexAI
+# This file is part of the FlexAI Experiments repository.
+# SPDX-License-Identifier: MIT
+
 import warnings
 from dataclasses import dataclass, field
 from typing import Optional

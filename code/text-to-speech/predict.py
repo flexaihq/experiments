@@ -1,3 +1,7 @@
+# Copyright (c) 2025 FlexAI
+# This file is part of the FlexAI Experiments repository.
+# SPDX-License-Identifier: MIT
+
 # This is a basic inference script you can easily modify for your needs
 import soundfile as sf
 import torch

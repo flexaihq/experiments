@@ -1,6 +1,6 @@
 # Streaming large datasets during a Training Job
 
-In some cases you might want to use large datasets that would be too large to download or [push to FCS](https://docs.flex.ai/guides/uploading-datasets) and you'd prefer to use that data transfer time more efficiently. _Streaming_ such datasets can be a useful technique in those cases.
+In some cases you might want to use large datasets that would be too large to download or [push to FCS](https://docs.flex.ai/cli/guides/uploading-datasets/) and you'd prefer to use that data transfer time more efficiently. _Streaming_ such datasets can be a useful technique in those cases.
 
 This experiment demonstrates how to stream a large dataset during a Training Job on FCS. We'll use the [HuggingFace Datasets library](https://huggingface.co/docs/datasets/en/stream)'s Streaming capabilities to achieve this.
 
@@ -28,7 +28,7 @@ This will allow FlexAI to pull repositories directly from GitHub using the `-u` 
 Here is an example using the `code/causal-language-modeling/train.py` script to stream the over 90 TB [Fineweb dataset](https://huggingface.co/datasets/HuggingFaceFW/fineweb):
 
 ```bash
-flexai training run gpt2training-stream --repository-url https://github.com/flexaihq/fcs-experiments --dataset empty-dataset \
+flexai training run gpt2training-stream --repository-url https://github.com/flexaihq/experiments --dataset empty-dataset --requirements-path code/causal-language-modeling/requirements.txt \
    -- code/causal-language-modeling/train.py \
     --dataset_streaming true \
     --do_train \
@@ -48,7 +48,7 @@ flexai training run gpt2training-stream --repository-url https://github.com/flex
 The first line defines the 3 main components required to run a Training Job in FCS:
 
 1. The Training Job's name (`gpt2training-stream`).
-1. The name of the Source that contains the training script (`fcs-experiments`).
+1. The URL of the repository containing the training script (`https://github.com/flexaihq/experiments`).
 1. The name of the dataset to be used (`empty-dataset` or any other dataset you have available).
 
 The second line is defines the script that will be executed when the Training Job is started (`code/causal-language-modeling/train.py`).

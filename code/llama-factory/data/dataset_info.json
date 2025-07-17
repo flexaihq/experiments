@@ -1,0 +1,18 @@
+{
+    "identity": {
+        "file_name": "identity.json"
+    },
+    "alpaca_en_demo": {
+        "file_name": "alpaca_en_demo.json"
+    },
+    "wikitext": {
+        "file_name": "/input/hf-wikitext/wikitext-2-raw-v1"
+    },
+    "openhermes-fr": {
+        "hf_hub_url": "legmlai/openhermes-fr",
+        "columns": {
+            "prompt": "prompt",
+            "response": "accepted_completion"
+        }
+    }
+}

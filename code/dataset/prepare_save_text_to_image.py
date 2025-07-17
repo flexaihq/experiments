@@ -1,3 +1,7 @@
+# Copyright (c) 2025 FlexAI
+# This file is part of the FlexAI Experiments repository.
+# SPDX-License-Identifier: MIT
+
 import argparse
 import os
 import random

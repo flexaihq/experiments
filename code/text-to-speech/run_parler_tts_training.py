@@ -1186,14 +1186,17 @@ def main():
                 if (
                     cur_step % training_args.save_steps == 0
                 ) or cur_step == total_train_steps:
-                    intermediate_dir = os.path.join(
-                        training_args.output_dir, f"checkpoint-{cur_step}-epoch-{epoch}"
-                    )
-                    # safe_serialization=False to avoid shared tensors saving issue (TODO(YL): it's a temporary fix)
-                    # https://github.com/huggingface/transformers/issues/27293#issuecomment-1872560074
-                    accelerator.save_state(
-                        output_dir=intermediate_dir, safe_serialization=False
-                    )
+                    if accelerator.is_main_process:
+                        intermediate_dir = os.path.join(
+                            training_args.output_dir,
+                            f"checkpoint-{cur_step}-epoch-{epoch}",
+                        )
+
+                        # safe_serialization=False to avoid shared tensors saving issue (TODO(YL): it's a temporary fix)
+                        # https://github.com/huggingface/transformers/issues/27293#issuecomment-1872560074
+                        accelerator.save_state(
+                            output_dir=intermediate_dir, safe_serialization=False
+                        )
                     accelerator.wait_for_everyone()
                     if accelerator.is_main_process:
                         rotate_checkpoints(
