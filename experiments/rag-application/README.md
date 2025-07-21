@@ -2,16 +2,16 @@
 
 The RAG (Retrieval-Augmented Generation) application is designed to provide an interactive interface for users to ask questions based on provided documents.
 
-## Start the FCS endpoints
+## Start the FlexAI endpoints
 
-Create the FCS secret that contains your HF token in order to access the inference models:
+Create the FlexAI secret that contains your HF token in order to access the inference models:
 
 ```bash
 # Enter your HF token value when prompted
 flexai secret create hf-token
 ```
 
-Start the FCS endpoint of the LLM:
+Start the FlexAI endpoint of the LLM:
 
 ```bash
 LLM_INFERENCE_NAME=qwen-llm
@@ -22,7 +22,7 @@ export LLM_API_KEY=<store the given API key>
 export LLM_URL=$(flexai inference inspect $LLM_INFERENCE_NAME -j | jq .config.endpointUrl -r)
 ```
 
-Start the FCS endpoint of the embedder:
+Start the FlexAI endpoint of the embedder:
 
 ```bash
 EMBED_INFERENCE_NAME=e5-embed

@@ -1,10 +1,10 @@
-# Fine-Tuning a Language Model with LlamaFactory on FCS
+# Fine-Tuning a Language Model with LlamaFactory on FlexAI
 
 This experiment demonstrates how to fine-tune a language model using [LlamaFactory](https://github.com/hiyouga/LLaMA-Factory) on **FlexAI**. We'll use the `Llama-3-1B` model and the `identity` and `alpaca-en-demo` [LlamaFactory datasets](https://github.com/hiyouga/LLaMA-Factory/tree/main/data) as an example, but you can adapt this guide for other models and datasets.
 
 As you'll see below, you only need to pass your LlamaFactory configuration YAML.
 
-> **Note**: If you haven't already connected FlexAI to GitHub, run `flexai code-registry connect` to set up a code registry connection. This allows FCS to pull repositories directly using the `-u` flag in training commands.
+> **Note**: If you haven't already connected FlexAI to GitHub, run `flexai code-registry connect` to set up a code registry connection. This allows FlexAI to pull repositories directly using the `-u` flag in training commands.
 
 ## Create Secrets
 

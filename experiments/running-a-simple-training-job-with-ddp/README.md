@@ -1,4 +1,4 @@
-# Running a simple Distributed Data Parallel (DDP) Training Job on FCS
+# Running your first Distributed Data Parallel (DDP) Training Job on FlexAI
 
 This experiment demonstrates how easy it is to leverage **FlexAI** to run a Training Job with a couple of commands. We will use a simple example of training a causal language model (LLM) on the `wikitext` dataset using the `GPT-2` model.
 
@@ -26,7 +26,7 @@ In this experiment, we will use a pre-processed version of the the `wikitext` da
     DATASET_NAME=gpt2-tokenized-wikitext && curl -L -o ${DATASET_NAME}.zip "https://bucket-docs-samples-99b3a05.s3.eu-west-1.amazonaws.com/${DATASET_NAME}.zip" && unzip ${DATASET_NAME}.zip && rm ${DATASET_NAME}.zip
     ```
 
-1. Upload the dataset (located in `gpt2-tokenized-wikitext/`) to FCS:
+1. Upload the dataset (located in `gpt2-tokenized-wikitext/`) to FlexAI:
 
     ```bash
     flexai dataset push gpt2-tokenized-wikitext --file gpt2-tokenized-wikitext
@@ -39,7 +39,7 @@ Now, it's time to train your LLM on the dataset you just _pushed_ in the previou
 To start the Training Job, run the following command:
 
 ```bash
-flexai training run fcs-experiments-simple-ddp --repository-url https://github.com/flexaihq/experiments --dataset gpt2-tokenized-wikitext \
+flexai training run first-ddp-training-job --repository-url https://github.com/flexaihq/experiments --dataset gpt2-tokenized-wikitext \
   --nodes 2 --accels 8 --requirements-path code/causal-language-modeling/requirements.txt \
   -- code/causal-language-modeling/train.py \
     --do_eval \
@@ -56,9 +56,9 @@ flexai training run fcs-experiments-simple-ddp --repository-url https://github.c
     --eval_strategy steps
 ```
 
-The first line defines the 3 main components required to run a Training Job in FCS:
+The first line defines the 3 main components required to run a Training Job in FlexAI:
 
-1. The Training Job's name (`fcs-experiments-simple-ddp`).
+1. The Training Job's name (`first-ddp-training-job`).
 1. The URL of the repository containing the training script (`https://github.com/flexaihq/experiments`).
 1. The name of the dataset to be used (`gpt2-tokenized-wikitext`).
 
@@ -73,13 +73,13 @@ After the third line come the script's arguments, which are passed to the script
 You can check the status and life cycle events of your Training Job by running:
 
 ```bash
-flexai training inspect fcs-experiments-simple-ddp
+flexai training inspect first-ddp-training-job
 ```
 
 Additionally, you can view the logs of your Training Job by running:
 
 ```bash
-flexai training logs fcs-experiments-simple-ddp
+flexai training logs first-ddp-training-job
 ```
 
 ## Step 5: Fetching the Trained Model artifacts
@@ -87,7 +87,7 @@ flexai training logs fcs-experiments-simple-ddp
 Once the Training Job completes successfully, you will be able to list all the produced checkpoints:
 
 ```bash
-flexai training checkpoints fcs-experiments-simple-ddp
+flexai training checkpoints first-ddp-training-job
 ```
 
 They can be downloaded with:
@@ -96,22 +96,22 @@ They can be downloaded with:
 flexai checkpoint fetch "<CHECKPOINT-ID>"
 ```
 
-You now have a trained model that you can use for inference or further fine-tuning! Check out the [Extra](#optional-extra-steps) section below for more information on how to run your fine-tuned model locally, or even better, how to run the training script directly on FCS using an Interactive Training Session. You can also learn how to manually pre-process the dataset if you're interested in understanding the process better.
+You now have a trained model that you can use for inference or further fine-tuning! Check out the [Extra](#optional-extra-steps) section below for more information on how to run your fine-tuned model locally, or even better, how to run the training script directly on FlexAI using an Interactive Training Session. You can also learn how to manually pre-process the dataset if you're interested in understanding the process better.
 
-You can also have a look at other FCS experiments within this repository to explore more advanced use cases and techniques.
+You can also have a look at other FlexAI experiments within this repository to explore more advanced use cases and techniques.
 
 ## Optional Extra Steps
 
 ### Try your fine-tuned model locally
 
-You can run your newly fine-tuned model in an [FCS Interactive Session](#run-the-training-script-directly-on-fcs-using-an-interactive-training-session) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
+You can run your newly fine-tuned model in an [FlexAI Interactive Session](#run-the-training-script-directly-on-flexai-using-an-interactive-training-session) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
 
 #### 1. Clone this repository
 
 If you haven't already, clone this repository on your host machine:
 
 ```bash
-git clone https://github.com/flexaihq/experiments.git --depth 1 --branch main && cd fcs-experiments
+git clone https://github.com/flexaihq/experiments.git flexai-experiments --depth 1 --branch main && cd flexai-experiments
 ```
 
 #### 2. Install the dependencies
@@ -127,7 +127,7 @@ pip install -r code/causal-language-modeling/requirements.txt
 First, list the available checkpoints from your training job:
 
 ```bash
-flexai training checkpoints fcs-experiments-simple-ddp
+flexai training checkpoints first-ddp-training-job
 ```
 
 Then fetch the specific checkpoint you want to use (replace `<CHECKPOINT-ID>` with the actual checkpoint ID from the list):
@@ -149,9 +149,9 @@ python code/causal-language-modeling/predict.py \
     --max_new_tokens 30
 ```
 
-### Run the training script directly on FCS using an Interactive Training Session
+### Run the training script directly on FlexAI using an Interactive Training Session
 
-An Interactive Training Session allows you to connect to a Training Environment runtime on FCS and run your both training and prediction or inference scripts directly from this environment. This is a great way to test your scripts and experiment with different hyperparameters without having to create multiple Training Jobs per configuration change.
+An Interactive Training Session allows you to connect to a Training Environment runtime on FlexAI and run your both training and prediction or inference scripts directly from this environment. This is a great way to test your scripts and experiment with different hyperparameters without having to create multiple Training Jobs per configuration change.
 
 You will find the guide on how to run an Interactive Training Session in the [FlexAI Documentation](https://docs.flex.ai/cli/guides/interactive-training/). You'll need to use the path for the `flexaihq/experiments` repository as your `--repository-url` and pass the `gpt2-tokenized-wikitext` dataset you pushed earlier as `--dataset`, unless you want to leverage the Interactive Training Session's compute resources to [manually pre-process the dataset](#manual-dataset-pre-processing).
 

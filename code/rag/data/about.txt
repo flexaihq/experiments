@@ -1,2 +1,2 @@
 What is this demo about?
-This demo showcases how to quickly build a Retrieval-Augmented Generation (RAG) application using FCS services.
+This demo showcases how to quickly build a Retrieval-Augmented Generation (RAG) application using FlexAI.

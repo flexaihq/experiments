@@ -26,7 +26,7 @@ DATASET_NAME=text-to-speech-fr && curl -L -o ${DATASET_NAME}.zip "https://bucket
 
 > If you'd like to reproduce the pre-processing steps yourself to use a different dataset or simply to learn more about the process, you can refer to the [Manual Dataset Pre-processing](#manual-dataset-pre-processing) section below.
 
-Next, push the contents of the `text-to-speech-fr/` directory as a new FCS dataset:
+Next, push the contents of the `text-to-speech-fr/` directory as a new FlexAI dataset:
 
 ```bash
 flexai dataset push text-to-speech-fr --file text-to-speech-fr
@@ -74,7 +74,7 @@ flexai training run text-to-speech-ddp --repository-url https://github.com/flexa
 
 ## Optional Extra Steps
 
-You can run these extra steps in an [FCS Interactive Session](https://docs.flex.ai/cli/guides/interactive-training/) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
+You can run these extra steps in an [FlexAI Interactive Session](https://docs.flex.ai/cli/guides/interactive-training/) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
 
 ### Inference
 
@@ -89,7 +89,7 @@ If you'd prefer to perform the dataset pre-processing step yourself, you can fol
 If you haven't already, clone this repository on your host machine:
 
 ```bash
-git clone https://github.com/flexaihq/experiments.git --depth 1 --branch main && cd fcs-experiments
+git clone https://github.com/flexaihq/experiments.git flexai-experiments --depth 1 --branch main && cd flexai-experiments
 ```
 
 #### Install the dependencies

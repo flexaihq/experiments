@@ -1,8 +1,8 @@
 # Streaming large datasets during a Training Job
 
-In some cases you might want to use large datasets that would be too large to download or [push to FCS](https://docs.flex.ai/cli/guides/uploading-datasets/) and you'd prefer to use that data transfer time more efficiently. _Streaming_ such datasets can be a useful technique in those cases.
+In some cases you might want to use large datasets that would be too large to download or [push to FlexAI](https://docs.flex.ai/cli/guides/uploading-datasets/) and you'd prefer to use that data transfer time more efficiently. _Streaming_ such datasets can be a useful technique in those cases.
 
-This experiment demonstrates how to stream a large dataset during a Training Job on FCS. We'll use the [HuggingFace Datasets library](https://huggingface.co/docs/datasets/en/stream)'s Streaming capabilities to achieve this.
+This experiment demonstrates how to stream a large dataset during a Training Job on FlexAI. We'll use the [HuggingFace Datasets library](https://huggingface.co/docs/datasets/en/stream)'s Streaming capabilities to achieve this.
 
 ## Step 1: Connect to GitHub (if needed)
 
@@ -45,7 +45,7 @@ flexai training run gpt2training-stream --repository-url https://github.com/flex
     --save_steps 1000
 ```
 
-The first line defines the 3 main components required to run a Training Job in FCS:
+The first line defines the 3 main components required to run a Training Job in FlexAI:
 
 1. The Training Job's name (`gpt2training-stream`).
 1. The URL of the repository containing the training script (`https://github.com/flexaihq/experiments`).
@@ -90,4 +90,4 @@ def load_and_tokenize(
     )
 ```
 
-This is all that is needed to stream a dataset during a Training Job on FCS! You are no longer restricted by the challenges that come with large dataset transfer processes, and can now use them more efficiently.
+This is all that is needed to stream a dataset during a Training Job on FlexAI! You are no longer restricted by the challenges that come with large dataset transfer processes, and can now use them more efficiently.

@@ -17,7 +17,7 @@ DATASET_NAME=sdxl-tokenized-naruto && curl -L -o ${DATASET_NAME}.zip "https://bu
 
 > If you'd like to reproduce the pre-processing steps yourself to use a different dataset or simply to learn more about the process, you can refer to the [Manual Dataset Pre-processing](#manual-dataset-pre-processing) section below.
 
-Next, push the contents of the `sdxl-tokenized-naruto/` directory as a new FCS dataset:
+Next, push the contents of the `sdxl-tokenized-naruto/` directory as a new FlexAI dataset:
 
 ```bash
 flexai dataset push sdxl-tokenized-naruto --file sdxl-tokenized-naruto
@@ -55,14 +55,14 @@ flexai training run text-to-image-lora-SDXL-training-ddp --repository-url https:
 
 If you'd prefer to perform the dataset pre-processing step yourself, you can follow these instructions.
 
-You can run these in an [FCS Interactive Session](https://docs.flex.ai/cli/guides/interactive-training/) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
+You can run these in an [FlexAI Interactive Session](https://docs.flex.ai/cli/guides/interactive-training/) or in a local env (e.g. `pipenv install --python 3.10`), if you have hardware that's capable of doing inference.
 
 #### Clone this repository
 
 If you haven't already, clone this repository on your host machine:
 
 ```bash
-git clone https://github.com/flexaihq/experiments.git --depth 1 --branch main && cd fcs-experiments
+git clone https://github.com/flexaihq/experiments.git flexai-experiments --depth 1 --branch main && cd flexai-experiments
 ```
 
 #### Install the dependencies

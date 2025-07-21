@@ -28,7 +28,7 @@ To enable seamless integration with _wandb_ in your experiments, follow these st
 
 3. **Note on Project Name**
 
-   Keep in mind that the project name used in your _wandb_ setup does not need to be an FCS Secret. Additionally, the project name does not need to be pre-created in _wandb_ — it will be automatically created if it doesn’t exist when you log your first experiment.
+   Keep in mind that the project name used in your _wandb_ setup does not need to be an FlexAI Secret. Additionally, the project name does not need to be pre-created in _wandb_ — it will be automatically created if it doesn’t exist when you log your first experiment.
 
 ## Log to Weights and Biases
 
@@ -64,7 +64,7 @@ In this experiment, we will use a pre-processed version of the the `wikitext` da
     DATASET_NAME=gpt2-tokenized-wikitext && curl -L -o ${DATASET_NAME}.zip "https://bucket-docs-samples-99b3a05.s3.eu-west-1.amazonaws.com/${DATASET_NAME}.zip" && unzip ${DATASET_NAME}.zip && rm ${DATASET_NAME}.zip
     ```
 
-2. Upload the dataset (located in `gpt2-tokenized-wikitext/`) to FCS:
+2. Upload the dataset (located in `gpt2-tokenized-wikitext/`) to FlexAI:
 
     ```bash
     flexai dataset push gpt2-tokenized-wikitext --file gpt2-tokenized-wikitext
