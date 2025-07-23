@@ -1,6 +1,6 @@
 ---
 ### model
-model_name_or_path: Qwen/Qwen2.5-72B
+model_name_or_path: /input-checkpoint
 trust_remote_code: true
 
 ### method
@@ -10,7 +10,7 @@ finetuning_type: freeze
 deepspeed: code/llama-factory/ds_z3_config.json
 
 ### dataset
-dataset: openhermes-fr
+dataset: openhermes-fr-prefetched
 dataset_dir: code/llama-factory/data
 template: qwen
 cutoff_len: 2048

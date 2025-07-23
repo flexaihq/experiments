@@ -47,9 +47,9 @@ The [`qwen25-72B_sft.yaml`](../../code/llama-factory/qwen25-72B_sft.yaml) file h
 To launch the training job:
 
 ```bash
-flexai training run llamafactory-sft-llama3 \
-  --accels 8 --nodes 2 \
-  --repository-url https://github.com/flexaihq/flexai-experiments \
+flexai training run llamafactory-sft-qwen-72B \
+  --accels 8 --nodes 4 \
+  --repository-url https://github.com/flexaihq/experiments \
   --env FORCE_TORCHRUN=1 \
   --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> \
   --requirements-path code/llama-factory/requirements.txt \
@@ -62,9 +62,9 @@ flexai training run llamafactory-sft-llama3 \
 To take advantage of model pre-fetching performed in the [Optional: Pre-fetch the Model](#optional-pre-fetch-the-model) section, use:
 
 ```bash
-flexai training run llamafactory-sft-llama3 \
-  --accels 8 --nodes 2 \
-  --repository-url https://github.com/flexaihq/flexai-experiments \
+flexai training run llamafactory-sft-qwen-72B-prefetched \
+  --accels 8 --nodes 4 \
+  --repository-url https://github.com/flexaihq/experiments \
   --checkpoint qwen25-72b \
   --env FORCE_TORCHRUN=1 \
   --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> \
@@ -81,8 +81,8 @@ To launch the training job:
 
 ```bash
 flexai training run llamafactory-sft-llama3 \
-  --accels 8 --nodes 2 \
-  --repository-url https://github.com/flexaihq/flexai-experiments \
+  --accels 8 --nodes 4 \
+  --repository-url https://github.com/flexaihq/experiments \
   --env FORCE_TORCHRUN=1 \
   --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> \
   --requirements-path code/llama-factory/requirements.txt \
@@ -90,16 +90,30 @@ flexai training run llamafactory-sft-llama3 \
   -- /layers/flexai_pip-install/packages/bin/llamafactory-cli train code/llama-factory/llama3_sft.yaml
 ```
 
----
-
 ## [Optional] Prefetch Your Own Dataset
 
-You can check our other examples, e.g. [`experiments/running-a-simple-training-job/README.md`](../running-a-simple-training-job/README.md), to see how to bring your own dataset using:
+You can speed up training and improve reproducibility by prefetching your dataset to FlexAI storage.
+This makes the dataset available as a FlexAI dataset object, allowing you to reference it directly in your training jobs.
+
+For example, to prefetch the Hugging Face `legmlai/openhermes-fr` dataset using the storage provider created earlier:
 
 ```bash
-flexai dataset push my-dataset ...
+flexai dataset push openhermes-fr --storage-provider HF-STORAGE --source-path legmlai/openhermes-fr
 ```
 
-Then, follow the [LlamaFactory dataset instructions](https://github.com/hiyouga/LLaMA-Factory/tree/main/data#readme) to prepare your data for training.
+Once the dataset is uploaded, you can launch a training job that uses both the prefetched model and dataset:
+
+```bash
+flexai training run llamafactory-sft-qwen-72B-prefetched-all \
+  --accels 8 --nodes 4 \
+  --repository-url https://github.com/flexaihq/experiments \
+  --checkpoint qwen25-72b \
+  --dataset openhermes-fr \
+  --env FORCE_TORCHRUN=1 \
+  --secret HF_TOKEN=<HF_AUTH_TOKEN_SECRET_NAME> \
+  --requirements-path code/llama-factory/requirements.txt \
+  --runtime nvidia-25.06 \
+  -- /layers/flexai_pip-install/packages/bin/llamafactory-cli train code/llama-factory/qwen25-prefetched_all_sft.yaml
+```
 
 ---

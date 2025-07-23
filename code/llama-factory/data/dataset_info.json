@@ -14,5 +14,12 @@
             "prompt": "prompt",
             "response": "accepted_completion"
         }
+    },
+    "openhermes-fr-prefetched": {
+        "hf_hub_url": "/input/openhermes-fr",
+        "columns": {
+            "prompt": "prompt",
+            "response": "accepted_completion"
+        }
     }
 }
